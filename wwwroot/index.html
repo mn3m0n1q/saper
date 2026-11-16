@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f5f5ef"><title>Saper — chwila skupienia</title><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<header class="topbar"><a class="brand" href="/" aria-label="Saper, strona główna"><span class="brand-icon">✳</span> saper<span class="brand-dot">.</span></a><span class="top-note">MAŁA GRA. DUŻO SKUPIENIA.</span><button id="help" class="text-button" aria-expanded="false" aria-controls="instructions">Jak grać <span>↗</span></button></header>
+<main>
+<section class="intro"><div class="eyebrow"><span></span> KLASYKA W DOBREJ FORMIE</div><h1>Odkryj swój<br>następny ruch<span>.</span></h1><p>Trochę logiki, odrobina intuicji. Ani jednej miny.</p></section>
+<section class="game-panel" aria-label="Gra Saper">
+<div class="panel-top"><div class="levels" role="group" aria-label="Poziom trudności"><button data-level="easy" class="selected" aria-pressed="true">Łatwy</button><button data-level="medium" aria-pressed="false">Średni</button><button data-level="hard" aria-pressed="false">Trudny</button></div><button class="new-game" id="restart">↻ <span>Nowa gra</span></button></div>
+<div class="game-body"><div class="stats"><div><span class="stat-label">⚑ POZOSTAŁE MINY</span><strong id="mines">010</strong></div><span class="status-icon" id="face" aria-hidden="true">☺</span><div class="time-stat"><span class="stat-label">◷ CZAS GRY</span><strong id="timer">00:00</strong></div></div>
+<div class="board-scroll"><div id="board" class="board" role="group" aria-label="Plansza sapera"></div></div>
+<div class="game-message" id="message" role="status" aria-live="polite">Przygotowuję planszę…</div>
+<button id="flag-mode" class="flag-mode" aria-pressed="false">⚑ Tryb flagowania: wyłączony</button>
+</div>
+<div class="panel-bottom"><span><span class="key">↖</span> Kliknij, aby odkryć</span><span><span class="key">⚑</span> Prawy przycisk, aby oznaczyć</span></div>
+</section>
+<section id="instructions" class="instructions" hidden><h2>Każda liczba to wskazówka.</h2><p>Wskazuje liczbę min na ośmiu sąsiednich polach. Odkryj wszystkie pola bez min, aby wygrać. Pierwszy ruch i jego sąsiedztwo są zawsze bezpieczne.</p><p>Oznaczaj podejrzane pola prawym przyciskiem myszy lub włącz tryb flagowania na telefonie. Klawiatura: strzałki przesuwają fokus, Enter odkrywa, F ustawia flagę.</p></section>
+<div class="underboard"><span class="safe-icon">✓</span><span>Pierwszy ruch? Zawsze bezpieczny.</span><span class="board-detail" id="detail">9 × 9 pól · 10 min</span></div>
+</main><footer><span>Bez pośpiechu. Pole po polu.</span><span>STWORZONE DLA CHWILI PRZERWY <span class="footer-star">✳</span></span></footer>
+</body></html>
