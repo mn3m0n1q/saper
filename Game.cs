@@ -32,13 +32,23 @@ public sealed class Game(int width, int height, int mines) {
             if (!cell.Revealed && (cell.Flagged || Cells.Count(c => c.Flagged) < mines)) cell.Flagged = !cell.Flagged;
             return;
         }
-        if (cell.Flagged || cell.Revealed) return;
-        if (status == "ready") Seed(index);
-        if (cell.Mine) { status = "lost"; exploded = index; ended = DateTimeOffset.UtcNow; return; }
-        var queue = new Queue<int>(); queue.Enqueue(index);
+        if (cell.Flagged) return;
+        var queue = new Queue<int>();
+        if (cell.Revealed) {
+            var neighbors = Neighbors(index).ToArray();
+            if (cell.Adjacent == 0 || neighbors.Count(n => Cells[n].Flagged) != cell.Adjacent) return;
+            foreach (var neighbor in neighbors) queue.Enqueue(neighbor);
+        } else {
+            if (status == "ready") Seed(index);
+            queue.Enqueue(index);
+        }
         while (queue.TryDequeue(out var next)) {
             var target = Cells[next];
-            if (target.Revealed || target.Flagged || target.Mine) continue;
+            if (target.Revealed || target.Flagged) continue;
+            if (target.Mine) {
+                status = "lost"; exploded = next; ended = DateTimeOffset.UtcNow;
+                return;
+            }
             target.Revealed = true;
             if (target.Adjacent == 0) foreach (var neighbor in Neighbors(next)) queue.Enqueue(neighbor);
         }

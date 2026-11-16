@@ -36,7 +36,7 @@ function render(focusIndex) {
     button.textContent = cell.mine ? '✳' : cell.flagged ? (game.status === 'lost' ? '×' : '⚑') : cell.revealed && cell.adjacent ? cell.adjacent : '';
     button.setAttribute('aria-label', `Wiersz ${Math.floor(index / game.width) + 1}, kolumna ${index % game.width + 1}: ${cell.mine ? 'mina' : cell.flagged ? 'flaga' : cell.revealed ? (cell.adjacent ? `${cell.adjacent} sąsiednich min` : 'puste') : 'zakryte'}`);
     button.tabIndex = index === (focusIndex ?? 0) ? 0 : -1;
-    button.onclick = () => move(index, flagMode ? 'flag' : 'reveal');
+    button.onclick = () => move(index, flagMode && !cell.revealed ? 'flag' : 'reveal');
     button.oncontextmenu = event => { event.preventDefault(); move(index, 'flag'); };
     button.onkeydown = event => {
       const offsets = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -game.width, ArrowDown: game.width };

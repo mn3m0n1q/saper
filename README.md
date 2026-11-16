@@ -7,10 +7,14 @@ Polskojęzyczna gra w ASP.NET Core / .NET 10 LTS, bez zewnętrznych pakietów Nu
 Zainstaluj SDK .NET 10, a następnie w katalogu projektu:
 
 ```sh
-dotnet run --urls http://localhost:5080
+dotnet run --project Saper.csproj --urls http://localhost:5080
 ```
 
 Otwórz http://localhost:5080. Gra oferuje poziomy 9×9/10 min, 16×16/40 min i 30×16/99 min. Pierwsze pole i jego sąsiedztwo są bezpieczne. Prawy przycisk lub tryb flagowania oznacza pola. Strzałki, Enter i F umożliwiają obsługę klawiaturą. Duże plansze przewijają się poziomo na telefonie.
+
+Otwórz `Saper.slnx` w Visual Studio 2026 i ustaw **Saper** jako projekt startowy. Solution zawiera aplikację i konsolowy projekt testów `GameTests`.
+
+Kliknięcie odkrytej liczby odsłania nieoflagowane pola wokół niej, jeśli liczba sąsiednich flag zgadza się z liczbą na polu (chording). Błędne flagi mogą spowodować przegraną. Funkcja działa także klawiszem Enter i w trybie flagowania na telefonie.
 
 ## VPS i domena
 
@@ -27,7 +31,7 @@ Diagnostyka: `docker compose logs --tail=100`, `docker compose ps`. Aktualizacja
 ## Weryfikacja
 
 ```sh
-dotnet build -c Release
+dotnet build Saper.slnx -c Release
 dotnet run --project tests/GameTests.csproj -c Release
 python3 tests/smoke.py http://localhost:5080
 ```

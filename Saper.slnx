@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Saper.csproj" />
+  <Project Path="tests/GameTests.csproj" />
+</Solution>
