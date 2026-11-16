@@ -14,7 +14,7 @@ Otwórz http://localhost:5080. Gra oferuje poziomy 9×9/10 min, 16×16/40 min i 
 
 Otwórz `Saper.slnx` w Visual Studio 2026 i ustaw **Saper** jako projekt startowy. Solution zawiera aplikację i konsolowy projekt testów `GameTests`.
 
-Kliknięcie odkrytej liczby odsłania nieoflagowane pola wokół niej, jeśli liczba sąsiednich flag zgadza się z liczbą na polu (chording). Błędne flagi mogą spowodować przegraną. Funkcja działa także klawiszem Enter i w trybie flagowania na telefonie.
+Kliknięcie odkrytej liczby odsłania nieoflagowane pola wokół niej, jeśli liczba sąsiednich flag zgadza się z liczbą na polu (chording). Odkrywanie propaguje się przez sąsiednie rozwiązane liczby, również już odkryte, aż nie ma kolejnych pól do odsłonięcia. Liczby bez odpowiedniej liczby flag zatrzymują propagację w swoim kierunku. Błędne flagi mogą spowodować przegraną także w dalszej części kaskady. Funkcja działa także klawiszem Enter i w trybie flagowania na telefonie.
 
 ## VPS i domena
 

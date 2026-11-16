@@ -63,3 +63,38 @@ edge.Cells[1].Revealed = true;
 edge.Play(0, "flag"); edge.Play(1, "reveal");
 Check(edge.Cells[2].Revealed && edge.Cells[5].Revealed && edge.Cells[7].Revealed, "Chord on top edge");
 Console.WriteLine("PASS: chording with correct, missing, excess and incorrect flags; flood fill, win and edge behavior.");
+
+// A row of mines above a chain of numbered cells: no empty-cell flood fill
+// can account for propagation along this board.
+static Game CascadeBoard(bool revealedChain) {
+    var game = new Game(7, 2, 7);
+    game.Play(1, "flag");
+    game.Play(0, "reveal");
+    for (var i = 0; i < 14; i++) {
+        var cell = game.Cells[i];
+        cell.Mine = i < 7;
+        cell.Flagged = i < 7;
+        cell.Revealed = i == 7 || (revealedChain && i >= 8 && i <= 12);
+        cell.Adjacent = Enumerable.Range(0, 7).Count(m => m != i && Math.Abs(m % 7 - i % 7) <= 1 && Math.Abs(m / 7 - i / 7) <= 1);
+    }
+    return game;
+}
+foreach (var revealedChain in new[] { false, true }) {
+    var cascade = CascadeBoard(revealedChain);
+    cascade.Play(7, "reveal");
+    Check(cascade.Cells[13].Revealed, "Cascade reaches distant cells through new and previously revealed numbers");
+    Check(View(cascade).GetProperty("status").GetString() == "won", "Cascade can win at its far end");
+    Check(cascade.Cells.Take(7).All(c => c.Flagged && !c.Revealed), "Cascade preserves flagged mines");
+}
+var blockedCascade = CascadeBoard(true);
+blockedCascade.Play(3, "flag");
+blockedCascade.Play(7, "reveal");
+Check(!blockedCascade.Cells[13].Revealed, "Cascade stops at unresolved numbers and does not jump across them");
+Check(View(blockedCascade).GetProperty("status").GetString() == "playing", "Blocked cascade stays active");
+var unsafeCascade = CascadeBoard(true);
+unsafeCascade.Play(6, "flag");
+unsafeCascade.Play(13, "flag");
+unsafeCascade.Play(7, "reveal");
+Check(View(unsafeCascade).GetProperty("status").GetString() == "lost", "Wrong flag at the far end loses during cascade");
+Check(View(unsafeCascade).GetProperty("exploded").GetInt32() == 6, "Cascade identifies distant exploded mine");
+Console.WriteLine("PASS: recursive numbered-cell cascade, revealed chains, stopping at unresolved numbers, distant win and loss.");
